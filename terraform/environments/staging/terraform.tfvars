@@ -14,6 +14,7 @@ ecs_max_capacity          = 6
 enable_custom_domain      = false
 domain_name               = "staging-api.example.com"
 route53_zone_id           = ""
+attach_acm_certificate    = false
 
 tags = {
   Environment = "staging"
