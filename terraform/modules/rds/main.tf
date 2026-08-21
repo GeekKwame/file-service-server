@@ -89,11 +89,11 @@ resource "aws_db_instance" "main" {
   skip_final_snapshot       = var.environment != "production"
   final_snapshot_identifier = "${var.project_name}-${var.environment}-db-final-snapshot"
 
-  performance_insights_enabled          = true
-  performance_insights_retention_period = 7
+  performance_insights_enabled          = var.performance_insights_enabled
+  performance_insights_retention_period = var.performance_insights_enabled ? 7 : null
 
-  monitoring_interval = 60
-  monitoring_role_arn = aws_iam_role.rds_monitoring.arn
+  monitoring_interval = var.monitoring_interval
+  monitoring_role_arn = var.monitoring_interval > 0 ? aws_iam_role.rds_monitoring.arn : null
 
   auto_minor_version_upgrade = true
 

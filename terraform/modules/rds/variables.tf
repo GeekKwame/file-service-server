@@ -79,6 +79,18 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "performance_insights_enabled" {
+  description = "Enable Performance Insights. Not available on free tier accounts."
+  type        = bool
+  default     = true
+}
+
+variable "monitoring_interval" {
+  description = "Enhanced Monitoring granularity in seconds. Set to 0 to disable."
+  type        = number
+  default     = 60
+}
+
 variable "tags" {
   description = "Tags map"
   type        = map(string)

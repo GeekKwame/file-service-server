@@ -82,6 +82,10 @@ module "rds" {
   db_password           = module.secrets.db_password
   deletion_protection   = var.environment == "production"
 
+  backup_retention_period      = var.db_backup_retention_period
+  performance_insights_enabled = var.db_performance_insights_enabled
+  monitoring_interval          = var.db_monitoring_interval
+
   tags = local.common_tags
 }
 

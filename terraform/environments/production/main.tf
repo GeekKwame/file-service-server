@@ -9,16 +9,21 @@ module "root" {
   enable_single_nat_gateway = var.enable_single_nat_gateway
   db_instance_class         = var.db_instance_class
   db_multi_az               = var.db_multi_az
-  ecs_cpu                   = var.ecs_cpu
-  ecs_memory                = var.ecs_memory
-  ecs_desired_count         = var.ecs_desired_count
-  ecs_min_capacity          = var.ecs_min_capacity
-  ecs_max_capacity          = var.ecs_max_capacity
-  enable_custom_domain      = var.enable_custom_domain
-  domain_name               = var.domain_name
-  route53_zone_id           = var.route53_zone_id
-  attach_acm_certificate    = var.attach_acm_certificate
-  tags                      = var.tags
+
+  db_backup_retention_period      = var.db_backup_retention_period
+  db_performance_insights_enabled = var.db_performance_insights_enabled
+  db_monitoring_interval          = var.db_monitoring_interval
+
+  ecs_cpu                = var.ecs_cpu
+  ecs_memory             = var.ecs_memory
+  ecs_desired_count      = var.ecs_desired_count
+  ecs_min_capacity       = var.ecs_min_capacity
+  ecs_max_capacity       = var.ecs_max_capacity
+  enable_custom_domain   = var.enable_custom_domain
+  domain_name            = var.domain_name
+  route53_zone_id        = var.route53_zone_id
+  attach_acm_certificate = var.attach_acm_certificate
+  tags                   = var.tags
 }
 
 output "api_url" {

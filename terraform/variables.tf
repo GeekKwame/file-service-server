@@ -51,6 +51,24 @@ variable "db_multi_az" {
   default     = false
 }
 
+variable "db_backup_retention_period" {
+  description = "Days to retain automated RDS backups. Free tier accounts are capped at 1."
+  type        = number
+  default     = 7
+}
+
+variable "db_performance_insights_enabled" {
+  description = "Enable RDS Performance Insights. Not available on free tier accounts."
+  type        = bool
+  default     = true
+}
+
+variable "db_monitoring_interval" {
+  description = "RDS Enhanced Monitoring granularity in seconds. Set to 0 to disable."
+  type        = number
+  default     = 60
+}
+
 variable "ecs_cpu" {
   description = "ECS Fargate Task CPU units"
   type        = number
