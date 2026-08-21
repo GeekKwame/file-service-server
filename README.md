@@ -8,6 +8,15 @@ This service offloads heavy binary payloads entirely to AWS S3 using **presigned
 
 ## 🏛️ System Architecture
 
+### AWS Deployment Topology
+
+![AWS architecture diagram: an Application Load Balancer spanning two availability zones routes HTTPS traffic to FastAPI containers running on ECS Fargate in private subnets, which read and write metadata in Amazon RDS PostgreSQL and issue presigned URLs for binary storage in Amazon S3](architecture.png)
+
+The entire topology is defined in Terraform — 64 resources across 12 modules and 3 environments.
+See [`terraform/README.md`](terraform/README.md) for the module reference.
+
+### Upload Request Flow
+
 ```
                                   ┌───────────────────────────────┐
                                   │      Client Application       │
