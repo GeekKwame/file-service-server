@@ -250,10 +250,20 @@ The following workarounds are applied for developer-level IAM accounts:
 
 | Issue | Workaround |
 |:---|:---|
-| `logs:PutRetentionPolicy` denied | CloudWatch log group auto-created by ECS (`awslogs-create-group = true`) instead of Terraform |
 | `application-autoscaling:ListTagsForResource` denied | Auto scaling disabled for dev/staging (`count = 0`), enabled only for production |
 
 For full Terraform management, add `CloudWatchLogsFullAccess` and `AWSKeyManagementServicePowerUser` policies.
+
+The ECS log group is created by Terraform with an explicit `log_retention_days`. If the deploying
+role cannot call `logs:PutRetentionPolicy`, set `awslogs-create-group = "true"` on the task
+definition and let ECS create the group instead — note that a group created that way never expires
+and is not removed by `terraform destroy`.
+
+## 🧹 Teardown
+
+`terraform destroy` removes every resource in one pass. Non-production environments set
+`ecr_force_delete = true` so the registry does not block the destroy once images have been pushed;
+production leaves it `false` deliberately, so tearing production down is a two-step, conscious act.
 
 ---
 

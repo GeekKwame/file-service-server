@@ -19,6 +19,8 @@ module "root" {
   ecs_desired_count      = var.ecs_desired_count
   ecs_min_capacity       = var.ecs_min_capacity
   ecs_max_capacity       = var.ecs_max_capacity
+  ecr_force_delete       = var.ecr_force_delete
+  log_retention_days     = var.log_retention_days
   enable_custom_domain   = var.enable_custom_domain
   domain_name            = var.domain_name
   route53_zone_id        = var.route53_zone_id

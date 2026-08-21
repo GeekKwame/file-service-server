@@ -99,6 +99,18 @@ variable "ecs_max_capacity" {
   default     = 10
 }
 
+variable "ecr_force_delete" {
+  description = "Allow terraform destroy to remove the ECR repository even when it still holds images. Enable for ephemeral environments only."
+  type        = bool
+  default     = false
+}
+
+variable "log_retention_days" {
+  description = "Retention in days for the ECS CloudWatch log group"
+  type        = number
+  default     = 30
+}
+
 variable "enable_custom_domain" {
   description = "Request an ACM certificate for domain_name and expose HTTPS on the ALB once attached"
   type        = bool

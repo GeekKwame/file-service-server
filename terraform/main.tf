@@ -28,6 +28,7 @@ module "ecr" {
 
   environment  = var.environment
   project_name = var.project_name
+  force_delete = var.ecr_force_delete
 
   tags = local.common_tags
 }
@@ -147,6 +148,7 @@ module "ecs" {
   ecs_task_role_arn      = module.iam.ecs_task_role_arn
   s3_bucket_name         = module.s3.bucket_id
   secrets_arn            = module.secrets.secret_arn
+  log_retention_days     = var.log_retention_days
 
   tags = local.common_tags
 }

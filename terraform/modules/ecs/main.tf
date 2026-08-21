@@ -1,4 +1,14 @@
-# CloudWatch Log Group is auto-created by ECS via awslogs-create-group option
+resource "aws_cloudwatch_log_group" "ecs" {
+  name              = "/ecs/${var.project_name}-${var.environment}"
+  retention_in_days = var.log_retention_days
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "/ecs/${var.project_name}-${var.environment}"
+    }
+  )
+}
 
 # ECS Cluster
 resource "aws_ecs_cluster" "main" {
@@ -75,10 +85,9 @@ resource "aws_ecs_task_definition" "main" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-group"         = "/ecs/${var.project_name}-${var.environment}"
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs.name
           "awslogs-region"        = var.aws_region
           "awslogs-stream-prefix" = "api"
-          "awslogs-create-group"  = "true"
         }
       }
 

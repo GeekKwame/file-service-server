@@ -79,6 +79,12 @@ variable "secrets_arn" {
   type        = string
 }
 
+variable "log_retention_days" {
+  description = "Retention in days for the ECS CloudWatch log group. Without this the group defaults to never expiring and accrues storage cost indefinitely."
+  type        = number
+  default     = 30
+}
+
 variable "aws_region" {
   description = "AWS Region"
   type        = string
