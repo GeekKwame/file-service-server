@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main, staging, dev, terraform ]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Build and deploy to ECS (requires provisioned infrastructure)'
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -40,6 +45,7 @@ jobs:
   build-and-deploy:
     name: Build Docker Image & Deploy to ECS
     needs: test-and-scan
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -122,9 +128,6 @@ jobs:
           ENV="${{ steps.env-name.outputs.ENV }}"
           ALB_URL=$(aws elbv2 describe-load-balancers --names file-service-${ENV}-alb --query "LoadBalancers[0].DNSName" --output text)
           HEALTH_URLS=("http://${ALB_URL}/api/v1/health")
-          if [ "$ENV" = "dev" ]; then
-            HEALTH_URLS=("https://fileservice.example.com/api/v1/health" "http://${ALB_URL}/api/v1/health")
-          fi
           echo "Testing health endpoints: ${HEALTH_URLS[*]}"
           for i in {1..10}; do
             for url in "${HEALTH_URLS[@]}"; do

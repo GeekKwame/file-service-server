@@ -11,10 +11,10 @@ ecs_memory                = 1024
 ecs_desired_count         = 1
 ecs_min_capacity          = 1
 ecs_max_capacity          = 4
-enable_custom_domain      = true
+enable_custom_domain      = false # Set to true only with a domain you control
 domain_name               = "fileservice.example.com"
-route53_zone_id           = ""   # DNS CNAME is managed outside this AWS account
-attach_acm_certificate    = true # ACM validation CNAME is in place
+route53_zone_id           = ""
+attach_acm_certificate    = false # ALB cannot attach a certificate that has not passed DNS validation
 
 tags = {
   Environment = "dev"

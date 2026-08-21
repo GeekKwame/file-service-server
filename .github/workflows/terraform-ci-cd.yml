@@ -12,6 +12,11 @@ on:
       - 'terraform/**'
       - '.github/workflows/terraform-ci-cd.yml'
   workflow_dispatch:
+    inputs:
+      apply_dev:
+        description: 'Apply the dev environment (provisions billable AWS resources)'
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -76,7 +81,7 @@ jobs:
   terraform-apply-dev:
     name: Terraform Apply (Dev)
     needs: terraform-plan
-    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/terraform') && github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch' && inputs.apply_dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
