@@ -50,6 +50,16 @@ resource "aws_iam_policy" "ecs_execution_secrets" {
           "kms:Decrypt"
         ]
         Resource = "*"
+      },
+      # AmazonECSTaskExecutionRolePolicy grants CreateLogStream and PutLogEvents
+      # but not CreateLogGroup, which the task definition needs because it sets
+      # awslogs-create-group. Without this the container never starts.
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup"
+        ]
+        Resource = "arn:aws:logs:*:*:log-group:/ecs/${var.project_name}-${var.environment}*"
       }
     ]
   })
